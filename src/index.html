@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.cyan.min.css"/>
+  <script src="https://unpkg.com/htmx.org@2.0.0"
+    integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
+  <title>Brainstormer</title>
+</head>
+
+<script>
+  // function that clears the table body
+  function clearTable() {
+    document.getElementById('table-content').innerHTML = '';
+  }
+</script>
+
+<body>
+  <main class="container-fluid">
+    <div class="grid">
+      <div>
+        <form hx-post="/api/form" hx-target="#table-content" hx-swap="beforeend" hx-disabled-elt="find button">
+          <fieldset>
+            <label>
+              Topic
+              <input name="topic" placeholder="coding, art, etc" maxlength="128" />
+            </label>
+            <label>
+              Region
+              <input name="region" placeholder="US, US-OH, etc" maxlength="20" />
+            </label>
+            <label>
+              Type
+              <select name="project_type">
+                <option value="coding project">Coding Project</option>
+                <option value="hardware project">Hardware Project</option>
+                <option value="blog post">Blog Post</option>
+                <option value="tweet">Tweet</option>
+                <option value="video">YouTube Video</option>
+                <option value="podcast">Podcast Topic</option>
+              </select>
+            </label>
+            <label>
+              <input type="checkbox" name="use_trending" />
+              Use Trending?
+            </label>
+          </fieldset>
+        
+          <button id="submit-button" type="submit">Submit</button>
+        </form>
+      </div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Ideas</th>
+            </tr>
+          </thead>
+          <tbody id="table-content">
+
+          </tbody>
+        </table>
+        <button class="secondary outline" onclick="clearTable()">Clear</button>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

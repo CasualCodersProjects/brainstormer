@@ -1,20 +1,19 @@
 import { Router } from 'itty-router';
 
+// @ts-expect-error its an html file
+import index from './index.html';
+import formHandler from './form-handler';
+
 // now let's create a router (note the lack of "new")
 const router = Router();
 
-// GET collection index
-router.get('/api/todos', () => new Response('Todos Index!'));
+router.get('/', () => new Response(index, {
+	headers: {
+		"content-type": "text/html;charset=UTF-8",
+	},
+}));
 
-// GET item
-router.get('/api/todos/:id', ({ params }) => new Response(`Todo #${params.id}`));
-
-// POST to the collection (we'll use async here)
-router.post('/api/todos', async (request) => {
-	const content = await request.json();
-
-	return new Response('Creating Todo: ' + JSON.stringify(content));
-});
+router.post('/api/form', formHandler);
 
 // 404 for everything else
 router.all('*', () => new Response('Not Found.', { status: 404 }));
